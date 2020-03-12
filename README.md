@@ -2,7 +2,7 @@
 Raspbian image kernels built with cyberdeck logos  
 
 This is for a stock Raspbian Buster image, version 4.19.108-v7+  
-No testing has been done at this time, satisfaction not guaranteed.
+Almost no testing has been done at this time, satisfaction not guaranteed.
 
 # Using the install script
 
