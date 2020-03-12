@@ -46,7 +46,7 @@ See reference below for color mapping if not randomizing
 9. Set the logo_rand.sh script to run with rc.local if you want to randomize boot kernel  
 Be sure to insert it before the exit 0 at the end of the script  
 The provided sed command inserts at the second to last line  
-`sed -e '$i/boot/logo_rand.sh' /etc/rc.local` 
+`sed -e '$i/boot/logo_rand.sh' /mnt/etc/rc.local` 
 
 # Color mapping for provided kernels
 
