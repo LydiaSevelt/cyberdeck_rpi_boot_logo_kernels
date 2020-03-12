@@ -16,7 +16,7 @@ Also mount the boot partition to /mnt/boot
 
 That should be it!
 
-# Instructions  
+# Manual install instructions  
 
 1. Mount your SD card on a machine to a path, example path /mnt  
 Also mount the boot partition to /mnt/boot
