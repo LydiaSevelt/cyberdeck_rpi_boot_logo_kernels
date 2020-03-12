@@ -7,6 +7,8 @@ No testing has been done at this time, satisfaction not guaranteed.
 # Using the install script
 
 !!Warning!! This script is barely tested and has almost no error checking, essentially it just runs all of the commands in the manual install instructions below without doing error checking.  
+You probably want to fully update your raspbian image before running this.  
+After running this a future kernel update will likely break things, beware.  
 
 1. Mount your SD card on a machine to a path, example path /mnt  
 Also mount the boot partition to /mnt/boot
