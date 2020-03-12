@@ -4,6 +4,18 @@ Raspbian image kernels built with cyberdeck logos
 This is for a stock Raspbian Buster image, version 4.19.108-v7+  
 No testing has been done at this time, satisfaction not guaranteed.
 
+# Using the install script
+
+!!Warning!! This script is barely tested and has almost no error checking, essentially it just runs all of the commands in the manual install instructions below without doing error checking.  
+
+1. Mount your SD card on a machine to a path, example path /mnt  
+Also mount the boot partition to /mnt/boot
+
+2. From inside the repository directory run the install script and provide the path to where you mounted the SD card  
+`./install_kernels.sh /mnt/`  
+
+That should be it!
+
 # Instructions  
 
 1. Mount your SD card on a machine to a path, example path /mnt  
@@ -25,7 +37,7 @@ Also mount the boot partition to /mnt/boot
 `cp -R ~/cyberdeck_rpi_boot_logo_kernels/vc /mnt/opt/`  
 
 5. Uncompress modules for the 4.19.108-v7+ into the lib/modules directory  
-`tar -zcvf ~/cyberdeck_rpi_boot_logo_kernels/modules.tar.gz -C /mnt/lib/`  
+`tar -zcxf ~/cyberdeck_rpi_boot_logo_kernels/modules.tar.gz -C /mnt/lib/`  
 
 6. Copy the logo_rand script into place if you want to randomize the boot logo  
 `cp ~/cyberdeck_rpi_boot_logo_kernels/logo_rand.sh /mnt/boot/`  
