@@ -37,7 +37,7 @@ cp ./boot/start.elf ${INS_PATH}/boot/
 cp -R ./vc ${INS_PATH}/opt/
 
 # extract modules into /lib/modules
-tar -zcvf ./modules.tar.gz -C ${INS_PATH}/lib/
+tar -zxvf ./modules.tar.gz -C ${INS_PATH}/lib/
 
 # copy randomize script
 cp ./logo_rand.sh ${INS_PATH}/boot/
@@ -55,6 +55,6 @@ chown -R root:root ${INS_PATH}/lib/modules/4.19.108*
 echo "kernel=kernel_cd_0.img" >> ${INS_PATH}/boot/config.txt
 
 # add randomize script to rc.local
-sed -e '$i/boot/logo_rand.sh' ${INS_PATH}/etc/rc.local
+sed -e '$i/boot/logo_rand.sh' -i ${INS_PATH}/etc/rc.local
 
 
