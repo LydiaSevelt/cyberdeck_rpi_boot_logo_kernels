@@ -1,71 +1,52 @@
-# cyberdeck_rpi_boot_logo_kernels  
-Raspbian image kernels built with cyberdeck logos  
+# cyberdeck_rpi_boot_logo_kernels
+Updated to be a script that builds the kernel(s) on the raspberry pi since precompiled binaries tend to become out of date quickly.
+This is slower bit it's also a lot more flexible.
 
-This is for a stock Raspbian Buster image, version 4.19.108-v7+  
-Almost no testing has been done at this time, satisfaction not guaranteed.
+Raspbian kernels are built for every ppm file in the cyberdeck_rpi_boot_logo_kernels/deck_logos/ directory.
 
-# Using the install script
+# Adding or subtracting logos
 
-**!!Warning!!** This script is barely tested and has almost no error checking, essentially it just runs all of the commands in the manual install instructions below without doing error checking.  
-You probably want to fully update your raspbian image before running this.  
-After running this a future kernel update will likely break things, beware.  
+Subtracting logos are as simple as removing them from the directory.
 
-1. Mount your SD card on a machine to a path, example path /mnt  
-Also mount the boot partition to /mnt/boot
+To add files they must be in the proper format.
 
-2. From inside the repository directory run the install script and provide the path to where you mounted the SD card  
-`./install_kernels.sh /mnt/`  
+1. Take your image(s) and make then 80x80 pixels, then export them into the PPM RAW file format (Gimp supports this)
+
+2. Install the netpbm package: sudo apt-get install netpbm
+
+3. Reduce the number of colors to 224: ppmquant 224 deck_logo.ppm > deck_logo_224.ppm
+
+4. Convert the format to PPM ASCII: pnmnoraw deck_logo_224.ppm > deck_logo_ascii_224.ppm
+
+5. Place your logo(s) into the cyberdeck_rpi_boot_logo_kernels/deck_logos/ so that the script will build a kernel for that logo and add it to the randomized rotation.
+
+# Using the build script
+
+**!!Warning!!** This script is barely tested and has almost no error checking, hey it works for me.
+
+You probably want to fully update your raspbian image before running this with: sudo apt-get dist-upgrade
+
+1. cd into the cyberdeck_rpi_boot_logo_kernels directory
+
+2. run the build_kernels.sh script with sudo: sudo ./build_kernels.sh
+
+3. Wait.
 
 That should be it!
 
-# Manual install instructions  
+# Updating for newer kernels
 
-1. Mount your SD card on a machine to a path, example path /mnt  
-Also mount the boot partition to /mnt/boot
+There are two options, you can either cd into the linux directory where the sources were pulled and do a "git pull" to pull the most recent version, or you can delete the linux directory to have a fresh copied pulled.
 
-2. Copy the kernels or kernel you wish to use to boot  
-`cp ~/cyberdeck_rpi_boot_logo_kernels/kernel_cd_* /mnt/boot/`
+Option 1:
 
-3. Backup previous version of firmware that need to be updated  
-`mv /mnt/boot/bootcode.bin /mnt/boot/bootcode.bin.bk`  
-`mv /mnt/boot/fixup.dat /mnt/boot/fixup.dat.bk`  
-`mv /mnt/boot/start.elf /mnt/boot/start.elf.bk`  
-`mv /mnt/opt/vc /mnt/opt/vc.bk`  
+1. cd cyberdeck_rpi_boot_logo_kernels/linux
 
-4. Copy new versions of firmware into place  
-`cp ~/cyberdeck_rpi_boot_logo_kernels/boot/bootcode.bin /mnt/boot/`  
-`cp ~/cyberdeck_rpi_boot_logo_kernels/boot/fixup.dat /mnt/boot/`  
-`cp ~/cyberdeck_rpi_boot_logo_kernels/boot/start.elf /mnt/boot/`  
-`cp -R ~/cyberdeck_rpi_boot_logo_kernels/vc /mnt/opt/`  
+2. git pull
 
-5. Uncompress modules for the 4.19.108-v7+ into the lib/modules directory  
-`tar -zcxf ~/cyberdeck_rpi_boot_logo_kernels/modules.tar.gz -C /mnt/lib/`  
+Option 2:
 
-6. Copy the logo_rand script into place if you want to randomize the boot logo  
-`cp ~/cyberdeck_rpi_boot_logo_kernels/logo_rand.sh /mnt/boot/`  
+1. rm -rf cyberdeck_rpi_boot_logo_kernels/linux
 
-7. Fix the permissons on everything in case it's not owned by root:root  
-`chown root:root /mnt/boot/kernel_cd_*`  
-`chown root:root /mnt/boot/bootcode.bin`  
-`chown root:root /mnt/boot/fixup.dat`  
-`chown root:root /mnt/boot/start.elf`  
-`chown root:root /mnt/boot/logo_rand.sh`  
-`chown -R root:root /mnt/opt/vc/`  
-`chown -R root:root /mnt/lib/modules/4.19.108*`  
+2. Follow the instructions under "Using the build script" above to just re-run the build_kernels.sh script
 
-8. Add kernel= line to config.txt to select kernel to boot  
-See reference below for color mapping if not randomizing  
-`echo "kernel=kernel_cd_0.img" >> /mnt/boot/config.txt`  
-
-9. Set the logo_rand.sh script to run with rc.local if you want to randomize boot kernel  
-Be sure to insert it before the exit 0 at the end of the script  
-The provided sed command inserts at the second to last line  
-`sed -e '$i/boot/logo_rand.sh' /mnt/etc/rc.local` 
-
-# Color mapping for provided kernels
-
-cyberdeck_orange_multi_clean -> kernel_cd_0.img  
-cyberdeck_cyan_multi_clean -> kernel_cd_1.img  
-cyberdeck_green_multi_clean -> kernel_cd_2.img  
-cyberdeck_purple_multi_clean -> kernel_cd_3.img  
-cyberdeck_yellow_multi_clean -> kernel_cd_4.img  
