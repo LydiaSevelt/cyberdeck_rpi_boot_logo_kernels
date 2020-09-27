@@ -8,7 +8,7 @@ help() {
 	echo "Options are rpi0, rpi1, rpi2, rpi3, or rpi4"
 	echo "Optional: string to be appended onto kernel version"
 	echo "Examples:"
-	echo "	sudo ./build_kernels.sh rpi4"
+	echo "  sudo ./build_kernels.sh rpi4"
 	echo "  sudo ./build_kernels.sh rpi4 deck"
 	exit 0
 }
