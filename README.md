@@ -4,7 +4,8 @@ This is slower bit it's also a lot more flexible.
 
 Raspbian kernels are built for every ppm file in the cyberdeck_rpi_boot_logo_kernels/deck_logos/ directory.
 
-**NOTE** It is recommended that you clone with repo with; git clone --depth=1 https://github.com/LydiaSevelt/cyberdeck_rpi_boot_logo_kernels.git
+**NOTE** It is recommended that you clone with repo with:  
+git clone --depth=1 https://github.com/LydiaSevelt/cyberdeck_rpi_boot_logo_kernels.git  
 As otherwise you pull old binaries and tarballs that are no longer needed and will do nothing but waste space.
 
 # Adding or subtracting logos
